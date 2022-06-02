@@ -1,0 +1,50 @@
+#stage 1
+FROM node:latest as node
+WORKDIR /app
+COPY . .
+RUN npm install
+RUN npm run build --prod
+#stage 2
+FROM nginx:alpine
+COPY --from=node /app/dist/demo-app /usr/share/nginx/html
+
+
+
+FROM node:8-alpine AS build-stage
+WORKDIR /app
+COPY . .
+RUN npm install && \
+    npm run build --prod
+
+FROM nginx:alpine
+## Remove default nginx website
+RUN rm -rf /usr/share/nginx/html/*
+## From 'build' stage copy over the artifacts in dist folder to default nginx public folder
+COPY --from=build-stage /app/dist/gcp-cloudbuild-gce-angular /usr/share/nginx/html
+CMD ["nginx", "-g", "daemon off;"]
+
+
+-----------cloud build yaml-------------------
+
+steps:
+- name: 'gcr.io/cloud-builders/go'
+  args: ['generate']
+- name: 'gcr.io/cloud-builders/go'
+  args: ['test', './...']
+- name: 'gcr.io/cloud-builders/go'
+  args: ['install', 'mytarget']
+  id: 'go-install'
+
+- name: 'gcr.io/cloud-builders/gsutil'
+  args: ['cp', '-r', './somefiles', 'gs://my-resource-bucket/somefiles']
+  waitFor: ['-']  # The '-' indicates that this step begins immediately.
+  id: 'fetch-resources'
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/mytarget', '.']
+  waitFor: ['go-install', 'fetch-resources']
+
+images: ['gcr.io/$PROJECT_ID/mytarget']
+
+
+https://typeofnan.dev/how-to-serve-an-angular-app-with-nginx-in-docker/
