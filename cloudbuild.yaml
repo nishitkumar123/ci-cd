@@ -1,13 +1,14 @@
 steps:
 # Install
-- name: 'gcr.io/cloud-builders/npm'
+- name: 'gcr.io/cloud-builders/npm:node-16.15.0'
   args: ['install']
 # Build
-- name: 'gcr.io/cloud-builders/npm'
+- name: 'gcr.io/cloud-builders/npm-16.15.0'
   args: ['run', 'build']
-# Deploy
-- name: 'gcr.io/$PROJECT_ID/firebase'
-  args: ['deploy']
+ 
+- name: "gcr.io/cloud-builders/gcloud"
+  args: [ 'compute' , 'scp' , '--recursive' , 'dist' , 'la-test-angular-node-1:/var/' , '--zone=us-central1-a' ]
+
 
 #steps:
 
