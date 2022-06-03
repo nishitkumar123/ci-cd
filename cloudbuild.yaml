@@ -33,7 +33,7 @@ steps:
 
      "dist",
 
-     "la-test-angular-node-1:/var/",
+     "la-test-angular-node-1:/var",
 
      "--zone=us-central1-a",
 
