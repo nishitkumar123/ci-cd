@@ -9,21 +9,6 @@ steps:
     args: [ 'run', 'build', '--prod' ]
     
   - name: "gcr.io/cloud-builders/gcloud"
+    args: [ 'compute' , 'scp' , '--recursive' , 'dist' , 'la-test-angular-node-1:/var/' , '--zone=us-central1-a' ]
 
-   args:
-
-    [
-
-     "compute",
-
-     "scp",
-
-     "--recurse",
-
-     "dist",
-
-     "la-test-angular-node-1:/var/",
-
-     "--zone=us-central1-a",
-
-   ]
+ 
