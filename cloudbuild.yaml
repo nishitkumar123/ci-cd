@@ -1,0 +1,41 @@
+steps:
+
+ # install dependencies for angular app
+
+ - name: "gcr.io/cloud-builders/npm:node-10.10.0"
+
+   args: ["install"]
+
+
+ # build production ready frontend angular app
+
+ - name: "gcr.io/cloud-builders/npm:node-10.10.0"
+
+   args: [run, ng, "--", build, "--prod"]
+
+
+ # OPTIONALLY remove current/old files
+
+
+ # upload newly pushed files (for frontend)
+
+ - name: "gcr.io/cloud-builders/gcloud"
+
+   args:
+
+    [
+
+     "compute",
+
+     "scp",
+
+     "--recurse",
+
+     "dist",
+
+     "YOUR-INSTANCE-NAME:/var/www",
+
+     "--zone=us-central1-a",
+
+   ]
+
