@@ -1,26 +1,46 @@
 steps:
-# Install
-- name: 'gcr.io/cloud-builders/npm:node-14.15.0'
-  args: ['install']
-# Build
-- name: 'gcr.io/cloud-builders/npm-14.15.0'
-  args: ['run', 'build']
- 
-- name: "gcr.io/cloud-builders/gcloud"
-  args: [ 'compute' , 'scp' , '--recursive' , 'dist' , 'la-test-angular-node-1:/var/' , '--zone=us-central1-a' ]
+
+ # install dependencies for angular app
+
+ - name: "gcr.io/cloud-builders/npm:node-10.10.0"
+
+   args: ["install"]
 
 
-#steps:
+ # build production ready frontend angular app
 
-  # Install node packages
- # - name: 'gcr.io/cloud-builders/npm'
-  #  args: [ 'install' ]
+ - name: "gcr.io/cloud-builders/npm:node-10.10.0"
 
-  # Build productive files
-#  - name: 'gcr.io/cloud-builders/npm'
-#    args: [ 'run', 'build', '--prod' ]
-    
-#  - name: "gcr.io/cloud-builders/gcloud"
-#    args: [ 'compute' , 'scp' , '--recursive' , 'dist' , 'la-test-angular-node-1:/var/' , '--zone=us-central1-a' ]
+   args: [run, ng, "--", build, "--prod"]
+
+
+ # OPTIONALLY remove current/old files
+
+
+ # upload newly pushed files (for frontend)
+
+ - name: "gcr.io/cloud-builders/gcloud"
+
+   args:
+
+    [
+
+     "compute",
+
+     "scp",
+
+     "--recurse",
+
+     "dist",
+
+     "la-test-angular-node-1:/var/",
+
+     "--zone=us-central1-a",
+
+   ]
+
+
+
+
 
  
