@@ -1,14 +1,28 @@
 steps:
+# Install
+- name: 'gcr.io/cloud-builders/npm'
+  args: ['install']
+# Test
+- name: 'gcr.io/cloud-builders/npm'
+  args: ['run', 'test:unit']
+# Build
+- name: 'gcr.io/cloud-builders/npm'
+  args: ['run', 'build']
+# Deploy
+- name: 'gcr.io/$PROJECT_ID/firebase'
+  args: ['deploy']
+
+#steps:
 
   # Install node packages
-  - name: 'gcr.io/cloud-builders/npm'
-    args: [ 'install' ]
+ # - name: 'gcr.io/cloud-builders/npm'
+  #  args: [ 'install' ]
 
   # Build productive files
-  - name: 'gcr.io/cloud-builders/npm'
-    args: [ 'run', 'build', '--prod' ]
+#  - name: 'gcr.io/cloud-builders/npm'
+#    args: [ 'run', 'build', '--prod' ]
     
-  - name: "gcr.io/cloud-builders/gcloud"
-    args: [ 'compute' , 'scp' , '--recursive' , 'dist' , 'la-test-angular-node-1:/var/' , '--zone=us-central1-a' ]
+#  - name: "gcr.io/cloud-builders/gcloud"
+#    args: [ 'compute' , 'scp' , '--recursive' , 'dist' , 'la-test-angular-node-1:/var/' , '--zone=us-central1-a' ]
 
  
