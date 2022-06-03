@@ -1,25 +1,12 @@
 steps:
 
- # install dependencies for angular app
+- name: 'gcr.io/cloud-builders/npm'
+    args: [ 'install' ]
 
- - name: "gcr.io/cloud-builders/npm:current"
+- name: 'gcr.io/cloud-builders/npm'
+    args: [ 'run', 'build', '--prod' ]
 
-   args: ["install"]
-
-
- # build production ready frontend angular app
-
- - name: "gcr.io/cloud-builders/npm:current"
-
-   args: [run, ng, "--", build, "--prod"]
-
-
- # OPTIONALLY remove current/old files
-
-
- # upload newly pushed files (for frontend)
-
- - name: "gcr.io/cloud-builders/gcloud"
+- name: "gcr.io/cloud-builders/gcloud"
 
    args:
 
@@ -38,4 +25,25 @@ steps:
      "--zone=us-central1-a",
 
    ]
+
+ # install dependencies for angular app
+
+ #- name: "gcr.io/cloud-builders/npm:current"
+
+  # args: ["install"]
+
+
+ # build production ready frontend angular app
+
+# - name: "gcr.io/cloud-builders/npm:current"
+
+ #  args: [run, ng, "--", build, "--prod"]
+
+
+ # OPTIONALLY remove current/old files
+
+
+ # upload newly pushed files (for frontend)
+
+ 
 
