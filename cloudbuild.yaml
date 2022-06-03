@@ -33,7 +33,7 @@ steps:
 
      "dist",
 
-     "YOUR-INSTANCE-NAME:/var/www",
+     "la-test-angular-node-1:/var/",
 
      "--zone=us-central1-a",
 
