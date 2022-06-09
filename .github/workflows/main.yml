@@ -75,4 +75,4 @@ jobs:
           with:
             GITHUB_TOKEN: ${{ secrets.TOKEN }}
             BRANCH: gh-pages
-            FOLDER: dist/hello-world
+            FOLDER: deploy_dist/hello-world
