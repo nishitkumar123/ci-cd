@@ -5,8 +5,13 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "build:prod": "ng build --prod",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e",
+    "clean": "rimraf ./dist",
+    "deploy": "ng deploy --base-href=/ci-cd/",
+    "build:ci": "npm run build:prod"
   },
   "private": true,
   "dependencies": {
