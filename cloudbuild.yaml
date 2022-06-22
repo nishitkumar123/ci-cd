@@ -1,0 +1,9 @@
+steps:
+- name: 'gcr.io/cloud-builders/gcloud'
+  id: Update dev server
+  entrypoint: /bin/sh
+  args:
+  - '-c'
+  - |
+    set -x && \
+    gcloud compute ssh cicd-testing-vm --zone=us-central1-c --command='/bin/sh /pull.sh'
